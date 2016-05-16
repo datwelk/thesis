@@ -1,5 +1,30 @@
 ## Usage
 
+#### Traffic redirection: packet loss
+Node B:
+<pre>
+$ gcc analyzer.c common.c -o analyzer
+$ ./analyzer -s 10 udp:10.0.0.2:50000
+</pre>
+Node C: 
+<pre>
+$ gcc -DHOST_C analyzer.c common.c -o analyzer
+$ ./analyzer -s 10 udp:10.0.0.2:50000
+</pre>
+Node A:
+<pre>
+$ gcc -pthread common.c generator.c -o generator -lrt
+$ ./generator -s 10 udp:10.0.0.2:50000 
+</pre>
+Node C4:
+<pre>
+$ java -jar target/floodlight.jar
+</pre>
+Node C1:
+<pre>
+$ python controller.py -n 1001
+</pre>
+Substitute `analyzer.c` with `analyzer_multistream.c` or `analyzer_close_up.c` or `analyzer_second_lowest.c` to obtain different results (see paper).
 #### Traffic duplication
 Node A:
 <pre>
