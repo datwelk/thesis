@@ -58,3 +58,14 @@ Node C1:
 $ python controller.py -n 1001
 </pre>
 For multistream tests, make sure to use sockets 50000-50006 when launching the analyzer instances on B.
+Displaying results:
+<pre>
+$ python plot_out_of_order.py 1stream_passthrough/B_50000.txt
+$ python plot_loss.py 1stream_passthrough/output.txt 1stream_passthrough/B_50000.txt
+$ python plot_out_of_order.py 1stream_duplication/B_50000.txt
+$ python plot_loss.py 1stream_duplication/output.txt 1stream_duplication/B_50000.txt
+$ python plot_out_of_order.py 7stream_passthrough/B_50000.txt
+$ python plot_loss.py 7stream_passthrough/output.txt 7stream_passthrough/B_50000.txt
+$ python plot_out_of_order.py 7stream_duplication/B_50000.txt
+$ python plot_loss.py 7stream_duplication/output.txt 7stream_duplication/B_50000.txt
+</pre>
