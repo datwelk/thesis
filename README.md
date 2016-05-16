@@ -10,6 +10,7 @@ $ python server.py
 Node B:
 <pre>
 $ gcc analyzer.c common.c -o analyzer
+./analyzer -s 10 udp:10.0.0.2:50000
 </pre>
 Node C4:
 <pre>
@@ -19,3 +20,4 @@ Node C1:
 <pre>
 $ python controller.py -n 1001
 </pre>
+For multistream tests, make sure to use sockets 50000-50006 when launching the analyzer instances on B.
