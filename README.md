@@ -10,6 +10,10 @@ Node C:
 <pre>
 $ python controller.py -n 1000
 </pre>
+Displaying results: 
+<pre>
+$ python plot_latency.py output.txt
+</pre>
 
 #### Traffic redirection: packet loss
 Node B:
@@ -36,6 +40,11 @@ Node C1:
 $ python controller.py -n 1001
 </pre>
 Substitute `analyzer.c` with `analyzer_multistream.c` or `analyzer_close_up.c` or `analyzer_second_lowest.c` to obtain different results (see paper).
+Displaying results:
+<pre>
+$ python plot.py B.txt C.txt
+</pre>
+
 #### Traffic duplication
 Use either of `passthrough` or `duplicate` methods within the `start` method of `controller.py` to conduct experiments with the respective flow: either simply connect A to B, or duplicate to C and D as well. (Comment the one out that's not needed)
 Node A:
@@ -57,7 +66,7 @@ Node C1:
 <pre>
 $ python controller.py -n 1001
 </pre>
-For multistream tests, make sure to use sockets 50000-50006 when launching the analyzer instances on B.
+For multistream tests, make sure to use sockets 50000-50006 when launching the analyzer instances on B, since this is what the controller expects.
 Displaying results:
 <pre>
 $ python plot_out_of_order.py 1stream_passthrough/B_50000.txt
