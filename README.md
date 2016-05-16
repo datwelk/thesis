@@ -37,6 +37,7 @@ $ python controller.py -n 1001
 </pre>
 Substitute `analyzer.c` with `analyzer_multistream.c` or `analyzer_close_up.c` or `analyzer_second_lowest.c` to obtain different results (see paper).
 #### Traffic duplication
+Use either of `passthrough` or `duplicate` methods within the `start` method of `controller.py` to conduct experiments with the respective flow: either simply connect A to B, or duplicate to C and D as well. (Comment the one out that's not needed)
 Node A:
 <pre>
 $ gcc -pthread common.c generator.c -o generator -lrt
