@@ -1,5 +1,16 @@
 ## Usage
 
+#### Traffic redirection: latency
+Node A:
+<pre>
+$ gcc -pthread common.c generator.c -o generator -lrt
+$ ./generator -s 10 udp:10.0.0.2:50000 
+</pre>
+Node C:
+<pre>
+$ python controller.py -n 1000
+</pre>
+
 #### Traffic redirection: packet loss
 Node B:
 <pre>
