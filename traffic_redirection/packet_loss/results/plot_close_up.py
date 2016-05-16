@@ -2,6 +2,7 @@ from matplotlib import mlab
 import matplotlib.pyplot as plt
 import numpy as np
 import math
+import argparse,sys
 
 from scipy.stats import norm
 
@@ -10,14 +11,20 @@ xC = []
 yB = []
 yC = []
 
-with open ('B.txt') as f:
+parser = argparse.ArgumentParser(description='Plot latency')
+parser.add_argument('B', help='Results at B')
+parser.add_argument('C', help='Results at C')
+
+args = parser.parse_args(sys.argv[1:])
+
+with open (args.B) as f:
    	for line in f:
    		t = line.split(' ')[0]
    		v = line.split(' ')[1]
    		xB.append(int(t))
    		yB.append(int(v))
 
-with open ('C.txt') as f:
+with open (args.C) as f:
    	for line in f:
    		t = line.split(' ')[0]
    		v = line.split(' ')[1]
