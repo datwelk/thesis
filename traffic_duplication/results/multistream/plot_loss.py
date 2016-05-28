@@ -10,6 +10,7 @@ from scipy.stats import norm
 parser = argparse.ArgumentParser(description='Plot out of order packets')
 parser.add_argument('c', help='Controller output')
 parser.add_argument('B', help='Input filename')
+parser.add_argument('n', help='No streams',default=7,type=int)
 
 args = parser.parse_args(sys.argv[1:])
 
@@ -30,7 +31,7 @@ ax.grid(True)
 ax.get_xaxis().tick_bottom()  
 ax.get_yaxis().tick_left()
 
-for j in range(0, 7):
+for j in range(0, args.n):
     sent = []
     received = []
     loss = []
