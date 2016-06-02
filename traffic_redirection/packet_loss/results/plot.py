@@ -26,6 +26,7 @@ with open (args.C) as f:
 assert len(B) == len(C)
 
 data = []
+j = 0
 
 for i in range(0, len(B)):
 	b = B[i]
@@ -35,13 +36,14 @@ for i in range(0, len(B)):
 		v = c - b - 1
 		data.append(v)
 	elif c < b:
-		pass
+		j += 1
 		# print 'jow'
 		# v = ((pow(2, 64) - 1) - c) + b - 1 
 		# data.append(v)
 
 #assert len(data) == len(B)
 
+print 'c < b: ' + str(j)
 print 'low: ' + str(min(data))
 print 'high: ' + str(max(data))
   
@@ -54,11 +56,11 @@ ax.grid(True)
   
 ax.get_xaxis().tick_bottom()  
 ax.get_yaxis().tick_left()
-ax.set_xlim([0, 120])
+#ax.set_xlim([0, 120])
 
 weights = np.ones_like(data)/float(len(data))
 
-binwidth = 1
+binwidth = 10
 plt.hist(data, weights=weights, bins=np.arange(min(data), max(data) + binwidth, binwidth), color=(31 / 255., 119 / 255., 180 / 255.))
 plt.xlabel('Number of packets lost', fontsize=16)
 plt.ylabel('Relative frequency', fontsize=16)

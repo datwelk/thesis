@@ -35,7 +35,8 @@ ax.get_yaxis().tick_left()
 
 weights = np.ones_like(data)/float(len(data))
 
-plt.hist(data, bins=200, weights=weights, color=(31 / 255., 119 / 255., 180 / 255.))
+binwidth = 0.001
+plt.hist(data, bins=np.arange(min(data), max(data) + binwidth, binwidth), weights=weights, color=(31 / 255., 119 / 255., 180 / 255.))
 plt.xlabel('Percentage of packets out of order', fontsize=16)
 plt.ylabel('Relative frequency', fontsize=16)
 plt.show()

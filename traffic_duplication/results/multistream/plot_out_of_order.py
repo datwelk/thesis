@@ -29,6 +29,8 @@ ax.grid(True)
 ax.get_xaxis().tick_bottom()  
 ax.get_yaxis().tick_left()
 
+#ax.set_xlim([0, 0.08])
+
 for j in range(0, 7):
     data = []
 
@@ -39,8 +41,9 @@ for j in range(0, 7):
             out_of_order = int(components[2])
             data.append(out_of_order / float(received) * 100)
 
-    weights = np.ones_like(data)/float(len(data))   
-    plt.hist(data, bins=200, weights=weights, color=tableau20[j], alpha=0.4)
+    weights = np.ones_like(data)/float(len(data))  
+    binwidth = 0.001
+    plt.hist(data, bins=np.arange(min(data), max(data) + binwidth, binwidth), weights=weights, color=tableau20[j], alpha=0.4)
     
 plt.xlabel('Percentage of packets out of order', fontsize=16)
 plt.ylabel('Relative frequency', fontsize=16)

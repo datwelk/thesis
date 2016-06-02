@@ -30,7 +30,7 @@ ax.grid(True)
 
 ax.get_xaxis().tick_bottom()  
 ax.get_yaxis().tick_left()
-ax.set_xlim([0, 25])
+#ax.set_xlim([0, 50])
 
 for j in range(0, args.n):
     sent = []
@@ -57,7 +57,8 @@ for j in range(0, args.n):
         loss.append(pc)
 
     weights = np.ones_like(loss)/float(len(loss))   
-    plt.hist(loss, bins=200, weights=weights, color=tableau20[j], alpha=0.4)
+    #binwidth = 0.2
+    plt.hist(loss, weights=weights,bins=200, binwidth),color=tableau20[j], alpha=0.4)
     
 plt.xlabel('Percentage of packets lost', fontsize=16)
 plt.ylabel('Relative frequency', fontsize=16)
