@@ -52,11 +52,12 @@ for j in range(0, 7):
 	assert len(data) == len(B)
 
 	weights = np.ones_like(data)/float(len(data))
-	plt.hist(data, bins=200, weights=weights, color=tableau20[j], alpha=0.4)
+	binwidth = 1
+	plt.hist(data, weights=weights, bins=np.arange(min(data), max(data) + binwidth, binwidth), color=tableau20[j], alpha=0.4)
 
 print 'max: ' + str(sorted(all_data)[-2])
 
-plt.xlim(0, 74)
+#plt.xlim(0, 75)
 plt.xlabel('Number of packets lost', fontsize=16)
 plt.ylabel('Relative frequency', fontsize=16)
 plt.show()

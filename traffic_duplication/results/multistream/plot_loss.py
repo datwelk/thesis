@@ -30,6 +30,7 @@ ax.grid(True)
 
 ax.get_xaxis().tick_bottom()  
 ax.get_yaxis().tick_left()
+ax.set_xlim([0, 25])
 
 for j in range(0, args.n):
     sent = []
@@ -50,7 +51,10 @@ for j in range(0, args.n):
 
     for i in range(0, len(received)):
         count_lost = max(0, sent[i] - received[i])
-        loss.append(count_lost / float(sent[i]) * 100)
+        pc = count_lost / float(sent[i]) * 100
+        if pc >= 20:
+            print "Loss: " + str(pc) + " Received: " + str(received[i]) + " Sent: " + str(sent[i])
+        loss.append(pc)
 
     weights = np.ones_like(loss)/float(len(loss))   
     plt.hist(loss, bins=200, weights=weights, color=tableau20[j], alpha=0.4)

@@ -6,76 +6,48 @@ import argparse, sys
 
 from scipy.stats import norm
 
-x = []
-y = []
+def plot(f, color, alpha):
+	x = []
+	y = []
 
-parser = argparse.ArgumentParser(description='Plot latency')
-parser.add_argument('f', help='Input filename')
+	with open (f) as _f:
+	   	for line in _f:
+	   		x.append(float(line.split(' ')[0]))
+	 		y.append(float(line.split(' ')[1]) / 1e3)
 
-args = parser.parse_args(sys.argv[1:])
+	low = min(y)
+	high = max(y)
+	print 'low: ' + str(low) + ' high: ' + str(high)
 
-with open (args.f) as f:
-   	for line in f:
-   		x.append(float(line.split(' ')[0]))
- 		y.append(float(line.split(' ')[1]) / 1e3)
+	weights = np.ones_like(y)/float(len(y))
+	binwidth = 1.5
+	plt.hist(y, weights=weights,bins=np.arange(min(y), max(y) + binwidth, binwidth), color=color, alpha=alpha)
 
-# mu, std = norm.fit(y)
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser(description='Plot latency')
+	parser.add_argument('f', help='Input filename')
+	parser.add_argument('--f2', help='Comparison')
+	parser.add_argument('--f3', help='Comparison #3')
 
-low = min(y)
-high = max(y)
-print 'low: ' + str(low) + ' high: ' + str(high)
+	args = parser.parse_args(sys.argv[1:])
+	plt.figure(figsize=(12, 9))  
 
-# You typically want your plot to be ~1.33x wider than tall.  
-# Common sizes: (10, 7.5) and (12, 9)  
-plt.figure(figsize=(12, 9))  
-  
-# Remove the plot frame lines. They are unnecessary chartjunk.  
-ax = plt.subplot(111)  
-ax.spines["top"].set_visible(False)  
-ax.spines["right"].set_visible(False)  
-  
-# Ensure that the axis ticks only show up on the bottom and left of the plot.  
-# Ticks on the right and top of the plot are generally unnecessary chartjunk.  
-ax.get_xaxis().tick_bottom()  
-ax.get_yaxis().tick_left()
-ax.grid(True)
+	plt.xlabel("Latency in milliseconds", fontsize=16)
+	plt.ylabel("Relative frequency", fontsize=16) 
 
-weights = np.ones_like(y)/float(len(y))
+	ax = plt.subplot(111)  
+	ax.spines["top"].set_visible(False)  
+	ax.spines["right"].set_visible(False)    
+	ax.get_xaxis().tick_bottom()  
+	ax.get_yaxis().tick_left()
+	ax.grid(True)
+	ax.set_xlim([0, 250])
 
-plt.xlabel("Latency in milliseconds", fontsize=16)
-plt.ylabel("Relative frequency", fontsize=16) 
-plt.hist(y, bins=120, weights=weights, color="#3F5D7D")
-
-#plt.plot(x, y)
-plt.show()
-
-# binwidth = 1
-# #plt.hist(y, bins=range(int(math.floor(min(y))), int(math.ceil(max(y))) + binwidth, binwidth), normed=True, facecolor='blue', rwidth=1)
-# plt.hist(y, bins=20, normed=True, facecolor='blue', rwidth=1)
-# plt.xlabel('Latency in milliseconds')
-# plt.ylabel('Frequency')
-# plt.show()
-
-# # Plot the PDF.
-# xmin, xmax = plt.xlim()
-# x = np.linspace(xmin, xmax, 100)
-# p = norm.pdf(x, mu, std)
-# plt.plot(x, p, 'k', linewidth=2)
-# title = "Fit results: mu = %.2f,  std = %.2f" % (mu, std)
-# plt.title(title)
-
-# plt.show()
-
-# x = np.array([0.0, 25.0, 50.0, 75.0, 90.0, 100.0])
-# y = np.array(sorted(y))
-
-# # print max(y)
-
-# y = mlab.prctile(y, p=x)
-# plt.plot((len(x) - 1) * x / 100., y, 'bo-')
-# plt.xticks((len(x) - 1) * x / 100., map(str, x))
-# plt.xlabel('Percentile')
-# plt.ylabel('Latency in milliseconds')
-# plt.rc('font', family='serif')
-# # plt.yticks(np.arange(0, 250 + 10, 10))
-# plt.show()
+	if args.f2 is None:
+		plot(args.f, "#1F77B4", 1)
+	else:
+		plot(args.f, "#1F77B4", 0.4)
+		plot(args.f2, "#BCBD22", 0.4)
+		#plot(args.f3, "#B10318", 0.4)
+	
+	plt.show()
