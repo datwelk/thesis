@@ -51,6 +51,15 @@ for j in range(0, 7):
 
 	assert len(data) == len(B)
 
+	count = len(data)
+	total = sum(np.array(data))
+
+	avg = total / float(count)
+	std = np.std(np.array(data))
+
+	print 'avg: ' + str(avg)
+	print 'std: ' + str(std)
+
 	weights = np.ones_like(data)/float(len(data))
 	binwidth = 1
 	plt.hist(data, weights=weights, bins=np.arange(min(data), max(data) + binwidth, binwidth), color=tableau20[j], alpha=0.4)

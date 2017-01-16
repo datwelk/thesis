@@ -37,15 +37,22 @@ for i in range(0, len(B)):
 		data.append(v)
 	elif c < b:
 		j += 1
-		# print 'jow'
 		# v = ((pow(2, 64) - 1) - c) + b - 1 
 		# data.append(v)
 
 #assert len(data) == len(B)
 
+count = len(data)
+total = sum(np.array(data))
+
+avg = total / float(count)
+std = np.std(np.array(data))
+
 print 'c < b: ' + str(j)
 print 'low: ' + str(min(data))
 print 'high: ' + str(max(data))
+print 'avg: ' + str(avg)
+print 'std: ' + str(std)
   
 plt.figure(figsize=(12, 9))  
   

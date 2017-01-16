@@ -9,28 +9,37 @@ from scipy.stats import norm
 def plot(f, color, alpha):
 	x = []
 	y = []
+	total = 0
 
 	with open (f) as _f:
 	   	for line in _f:
 	   		x.append(float(line.split(' ')[0]))
-	 		y.append(float(line.split(' ')[1]) / 1e3)
+	   		# Latency is recorded in microseconds. See controller.py
+	   		# line 87. Divide by 1000 to obtain milliseconds.
+	   		latency_ms = float(line.split(' ')[1]) / 1e3
+	 		y.append(latency_ms)
+	 		
+	count = len(y)
+	total = sum(np.array(y))
 
 	low = min(y)
 	high = max(y)
-	print 'low: ' + str(low) + ' high: ' + str(high)
+	avg = total / count
+	#std = math.sqrt(1/float(count) * sum((np.array(y) - avg)**2))
+	std = np.std(np.array(y))
+
+	print 'low: ' + str(low)
+	print 'high: ' + str(high) 
+	print 'avg: ' + str(avg)
+	print 'std: ' + str(std)
 
 	weights = np.ones_like(y)/float(len(y))
 	binwidth = 1
-	n, b, p = plt.hist(y, weights=weights,bins=np.arange(min(y), max(y) + binwidth, binwidth), color=color, alpha=alpha)
+	n, b, p = plt.hist(y, weights=weights,bins=np.arange(min(y), 
+		max(y) + binwidth, binwidth), color=color, alpha=alpha)
 	print 'Peak bin: ' + str(p[np.argmax(n)])
 
-if __name__ == '__main__':
-	parser = argparse.ArgumentParser(description='Plot latency')
-	parser.add_argument('f', help='Input filename')
-	parser.add_argument('--f2', help='Comparison')
-	parser.add_argument('--f3', help='Comparison #3')
-
-	args = parser.parse_args(sys.argv[1:])
+def show_graph(src):
 	plt.figure(figsize=(12, 9))  
 
 	plt.xlabel("Latency in milliseconds", fontsize=16)
@@ -44,11 +53,13 @@ if __name__ == '__main__':
 	ax.grid(True)
 	ax.set_xlim([0, 50])
 
-	if args.f2 is None:
-		plot(args.f, "#1F77B4", 1)
-	else:
-		plot(args.f, "#1F77B4", 0.4)
-		plot(args.f2, "#BCBD22", 0.4)
-		#plot(args.f3, "#B10318", 0.4)
-	
+	plot(src, "#1F77B4", 1)
 	plt.show()
+
+if __name__ == '__main__':
+	parser = argparse.ArgumentParser(description='Plot latency')
+	parser.add_argument('f', help='Input filename')
+
+	args = parser.parse_args(sys.argv[1:])
+	show_graph(args.f)
+	
