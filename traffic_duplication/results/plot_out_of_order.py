@@ -29,6 +29,7 @@ ax = plt.subplot(111)
 ax.spines["top"].set_visible(False)  
 ax.spines["right"].set_visible(False)  
 ax.grid(True)
+ax.set_ylim([0, 1])
   
 ax.get_xaxis().tick_bottom()  
 ax.get_yaxis().tick_left()

@@ -56,11 +56,11 @@ ax.grid(True)
   
 ax.get_xaxis().tick_bottom()  
 ax.get_yaxis().tick_left()
-#ax.set_xlim([0, 120])
+ax.set_xlim([0, 60])
 
 weights = np.ones_like(data)/float(len(data))
 
-binwidth = 10
+binwidth = 1
 plt.hist(data, weights=weights, bins=np.arange(min(data), max(data) + binwidth, binwidth), color=(31 / 255., 119 / 255., 180 / 255.))
 plt.xlabel('Number of packets lost', fontsize=16)
 plt.ylabel('Relative frequency', fontsize=16)

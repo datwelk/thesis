@@ -32,6 +32,8 @@ ax.get_xaxis().tick_bottom()
 ax.get_yaxis().tick_left()
 #ax.set_xlim([0, 50])
 
+z = 0
+
 for j in range(0, args.n):
     sent = []
     received = []
@@ -53,12 +55,15 @@ for j in range(0, args.n):
         count_lost = max(0, sent[i] - received[i])
         pc = count_lost / float(sent[i]) * 100
         if pc >= 20:
+            z += 1
             print "Loss: " + str(pc) + " Received: " + str(received[i]) + " Sent: " + str(sent[i])
         loss.append(pc)
 
     weights = np.ones_like(loss)/float(len(loss))   
     #binwidth = 0.2
-    plt.hist(loss, weights=weights,bins=200, binwidth),color=tableau20[j], alpha=0.4)
+    plt.hist(loss, weights=weights,bins=200,color=tableau20[j], alpha=0.4)
+
+print "No measurements >= 20 percent loss: " + str(z)
     
 plt.xlabel('Percentage of packets lost', fontsize=16)
 plt.ylabel('Relative frequency', fontsize=16)

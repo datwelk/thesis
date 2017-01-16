@@ -20,8 +20,9 @@ def plot(f, color, alpha):
 	print 'low: ' + str(low) + ' high: ' + str(high)
 
 	weights = np.ones_like(y)/float(len(y))
-	binwidth = 1.5
-	plt.hist(y, weights=weights,bins=np.arange(min(y), max(y) + binwidth, binwidth), color=color, alpha=alpha)
+	binwidth = 1
+	n, b, p = plt.hist(y, weights=weights,bins=np.arange(min(y), max(y) + binwidth, binwidth), color=color, alpha=alpha)
+	print 'Peak bin: ' + str(p[np.argmax(n)])
 
 if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description='Plot latency')
@@ -41,7 +42,7 @@ if __name__ == '__main__':
 	ax.get_xaxis().tick_bottom()  
 	ax.get_yaxis().tick_left()
 	ax.grid(True)
-	ax.set_xlim([0, 250])
+	ax.set_xlim([0, 50])
 
 	if args.f2 is None:
 		plot(args.f, "#1F77B4", 1)
