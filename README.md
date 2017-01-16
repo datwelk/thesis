@@ -42,7 +42,8 @@ $ python controller.py -n 1001
 Substitute `analyzer.c` with `analyzer_multistream.c` or `analyzer_close_up.c` or `analyzer_second_lowest.c` to obtain different results (see paper).
 Displaying results:
 <pre>
-$ python plot.py B.txt C.txt
+$ python plot.py B.txt C.txt (multi stream case)
+$ python plot.py B_output_port.txt C_output_port.txt  (single stream case)
 </pre>
 
 #### Traffic duplication
